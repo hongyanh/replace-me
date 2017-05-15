@@ -18,6 +18,10 @@ app.post('/replace', function(req, res) {
   res.json({ data: result})
 })
 
-app.listen(3000, function() {
-  console.log('Server running in 3000')
-})
+var PORT = 5000;
+
+app.listen(process.env.PORT || PORT);
+
+console.log("Express app running on port " + PORT);
+
+module.exports = app;

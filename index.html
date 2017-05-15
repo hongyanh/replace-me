@@ -1,0 +1,83 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Replace Me</title>
+  <style>
+      
+      body {
+        font-size: 20px;
+      }
+
+      label, input {
+        display: block;
+      }
+
+      input,textarea {
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+
+      button {
+        background-color: #48CFAD;
+        font-size: 25px;
+        color: white;
+        border: 1px solid #48CFAD;
+        border-radius: 5px;
+      }
+
+      .left {
+        width: 50%;
+        float: left;
+        border-right: 1px solid #ccc;
+      }
+
+      #replaced-text {
+        width: 45%;
+        float: right;
+      }
+
+  </style>
+</head>
+<body>
+  <div class="left">
+    
+    <form action="/replace" method="POST">
+        <label for="template">Template</label>
+        <textarea name="template" id="template" cols="60" rows="20"></textarea>
+        <label for="client_name">Replace [] with</label>
+        <input type="text" name="client_name" id="client_name">
+        <label for="company_name">Replace {} with</label>
+        <input type="text" name="company_name" id="company_name">
+        <label for="your_name">Replace () with</label>
+        <input type="text" name="your_name" id="your_name">
+    </form>
+
+      <button id="submit-text">Replace</button>
+  </div>
+ 
+  <label for="result">Result</label>
+  <textarea id="replaced-text" name="result" cols="60" rows="20"></textarea>
+
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+  <script>
+    $('#submit-text').click(function(event) {
+
+    $.ajax({
+       url: '/replace',
+       type: 'POST',
+       dataType: 'json',
+       data: {
+          template: $('#template').val(),
+          client_name: $('#client_name').val(),
+          company_name: $('#company_name').val(),
+          your_name: $('#your_name').val()
+        },
+       success: function(result) {
+         $('#replaced-text').val(result.data);
+       },
+    });
+  });
+  </script>
+</body>
+</html>
